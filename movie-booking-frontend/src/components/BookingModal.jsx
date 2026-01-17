@@ -1,58 +1,98 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import seatImage from "../assets/seat-arrangement.png";
 
-function BookingModal({ movie, close }) {
-  const [name, setName] = useState("");
-  const [tickets, setTickets] = useState("");
+function BookingModal({ movieId, user, close }) {
+  const [movie, setMovie] = useState(null);
+  const [tickets, setTickets] = useState(1);
+  const [showSeatInfo, setShowSeatInfo] = useState(false);
 
-  const bookTicket = () => {
+  useEffect(() => {
+    fetch("http://localhost:8080/movies")
+      .then(res => res.json())
+      .then(data => {
+        const m = data.find(x => x.id === movieId);
+        setMovie(m);
+      });
+  }, [movieId]);
+
+  if (!movie) return null;
+
+  const book = () => {
     fetch("http://localhost:8080/bookings", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         movieId: movie.id,
-        customerName: name,
-        tickets: tickets
+        customerName: user.username,     
+        phoneNumber: user.phoneNumber, 
+        tickets
       })
-    }).then(() => close());
+    }).then(() => {
+      alert("✅ Booking Confirmed");
+      close();
+    });
   };
 
   return (
-    <div style={{
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      background: "rgba(0,0,0,0.5)"
-    }}>
-      <div style={{
-        background: "#fff",
-        padding: "20px",
-        width: "300px",
-        margin: "120px auto",
-        borderRadius: "8px"
-      }}>
-        <h3>Book: {movie.title}</h3>
+    <>
+     
+      <div className="modal-bg">
+        <div className="modal">
+          <h3>{movie.title}</h3>
 
-        <input
-          placeholder="Your Name"
-          onChange={e => setName(e.target.value)}
-        />
-        <br /><br />
+          <div className="seat-row">
+            <span>Available: {movie.availableSeats}</span>
 
-        <input
-          type="number"
-          placeholder="Tickets"
-          onChange={e => setTickets(e.target.value)}
-        />
-        <br /><br />
+            <input
+              type="number"
+              min="1"
+              max={movie.availableSeats}
+              value={tickets}
+              onChange={e => setTickets(Number(e.target.value))}
+            />
 
-        <button onClick={bookTicket}>Confirm</button>
-        <button onClick={close} style={{ marginLeft: "10px" }}>
-          Cancel
-        </button>
+            <button
+              className="info-btn"
+              onClick={() => setShowSeatInfo(true)}
+            >
+              ℹ️ seat info
+            </button>
+          </div>
+
+          <button
+            className="confirm"
+            disabled={tickets > movie.availableSeats}
+            onClick={book}
+          >
+            Confirm Booking
+          </button>
+
+          <button className="cancel" onClick={close}>
+            Cancel
+          </button>
+        </div>
       </div>
-    </div>
+      {showSeatInfo && (
+        <div className="modal-bg">
+          <div className="modal" style={{ width: "380px" }}>
+            <h3>Seat Arrangement</h3>
+
+            <img
+              src={seatImage}
+              alt="Seat Arrangement"
+              style={{ width: "100%", borderRadius: "6px" }}
+            />
+
+            <button
+              className="confirm"
+              onClick={() => setShowSeatInfo(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
