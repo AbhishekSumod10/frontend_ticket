@@ -1,24 +1,17 @@
-Movie Ticket Booking System – Frontend
-Project Description
+🎬 Movie Ticket Booking System – Frontend
 
-This is the frontend application for the Movie Ticket Booking System, developed using React and Vite.
-It provides a user-friendly interface for users to register, log in, browse movies, book tickets, view their bookings, and cancel bookings.
+📌 Project Description
+This is the frontend application for the Movie Ticket Booking System, developed using React (Vite + JSX). It provides a clean and interactive user interface that allows users to register, log in, browse movies, book tickets, view their bookings, and cancel bookings.
+The frontend communicates with the Spring Boot backend using REST APIs and displays real-time seat availability to ensure a smooth booking experience.
 
-The frontend communicates with the Spring Boot backend using REST APIs and displays real-time seat availability updates.
+🛠️ Technology Stack
+React (Vite + JSX) for building UI components
+JavaScript for application logic
+HTML5 for page structure
+CSS3 for styling and layout
+Fetch API for backend communication
 
-Technology Stack
-
-React (Vite + JSX)
-
-JavaScript
-
-HTML5
-
-CSS3
-
-Fetch API
-
-Project Structure
+📂 Project Structure
 src
 │
 ├── components      - Reusable UI components
@@ -27,20 +20,14 @@ src
 ├── App.css         - Global styles
 └── index.html
 
-Prerequisites
-
-Ensure the following are installed on your system:
-
-Node.js (v18 or higher recommended)
-
+⚙️ Prerequisites
+Make sure the following are installed on your system:
+Node.js (v18 or higher)
 npm or yarn
-
 Git
 
-How to Run the Frontend
-
+▶️ How to Run the Frontend
 Clone the repository and navigate to the frontend directory:
-
 git clone https://github.com/your-username/movie-ticket-booking.git
 cd frontend
 npm install
@@ -48,92 +35,67 @@ npm run dev
 
 
 The frontend application will start at:
-
 http://localhost:5173
 
-Application Pages
-Login Page
+🧭 Application Pages
+🔐 Login Page
+The login page allows users to sign in using their username and phone number. If the user does not exist, the application redirects them to the registration page.
 
-Allows users to log in using username and phone number
+📝 Register Page
+The registration page allows new users to create an account. It uses the same layout and input sizes as the login page to maintain UI consistency.
 
-Redirects to registration page if the user does not exist
+🎞️ Movie Listing Page
+This page displays available movies in horizontally scrollable cards. Each card shows:
 
-Register Page
+Movie image
+Title
+Genre
+Duration
+Rating
+Available seats
 
-Allows new users to create an account
+🎟️ Booking Modal
+When the user clicks the Book button, a modal opens where they can:
+Enter the number of tickets
+View current seat availability
+View the seat arrangement image
 
-Uses the same layout and input sizes as the login page
+📋 Your Bookings
+This section displays only the bookings of the logged-in user and allows users to cancel bookings when needed.
 
-Movie Listing Page
-
-Displays movies in horizontally scrollable cards
-
-Shows movie image, title, genre, duration, rating, and available seats
-
-Booking Modal
-
-Opens when the user clicks the Book button
-
-Allows users to enter the number of tickets
-
-Displays seat availability and seat layout image
-
-Your Bookings
-
-Displays bookings for the logged-in user only
-
-Allows users to cancel bookings
-
-State Management
-
-React useState and useEffect hooks are used for state management
-
+🧠 State Management
+React useState and useEffect hooks are used for managing application state
 Logged-in user data is stored in component state
+Logging out clears the state and redirects the user to the login page
 
-Logout clears user state and redirects to the login page
-
-Backend API Integration
-
+🔗 Backend API Integration
 The frontend communicates with the backend running at:
-
 http://localhost:8080
-
-Example API Call (Fetch Movies)
+Example API Call – Fetch Movies
 useEffect(() => {
   fetch("http://localhost:8080/movies")
     .then(res => res.json())
     .then(data => setMovies(data));
 }, []);
 
-Styling and UI
-
+🎨 Styling and UI Design
 Custom CSS is used for styling
-
-Responsive layout with fixed AppBar and scrollable content
-
+Fixed AppBar with scrollable content area
+Responsive layout for different screen sizes
 Consistent design for login and registration pages
+Small, clean movie cards inspired by popular booking platforms
 
-Small, clean movie cards similar to popular booking platforms
+⚠️ Error Handling
+Input validation for empty fields
+Booking disabled when seats are unavailable
+Proper messages shown for invalid actions
 
-Error Handling
-
-Basic validation for empty inputs
-
-Disabled booking when seats are unavailable
-
-Displays appropriate messages for invalid actions
-
-Future Enhancements
-
+🚀 Future Enhancements
 Persistent login using localStorage
+Role-based access control (Admin / User)
+Seat selection user interface
+Improved notifications and error handling
 
-Role-based access (Admin / User)
-
-Seat selection UI
-
-Improved error handling and notifications
-
-Author
-
-Abhishek
+👨‍💻 Author
+Abhishek Sumod
 Movie Ticket Booking System – Frontend
